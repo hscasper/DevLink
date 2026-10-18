@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { setAlert } from './alert';
+import axios from "axios";
+import { setAlert } from "./alert";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -8,9 +8,9 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
-  CLEAR_PROFILE
-} from './types.js';
-import setAuthToken from '../utils/setAuthToken.js';
+  CLEAR_PROFILE,
+} from "./types.js";
+import setAuthToken from "../utils/setAuthToken.js";
 
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
@@ -18,7 +18,7 @@ export const loadUser = () => async (dispatch) => {
   }
 
   try {
-    const res = await axios.get('/api/auth');
+    const res = await axios.get("/api/auth");
 
     dispatch({
       type: USER_LOADED,
@@ -36,14 +36,14 @@ export const register =
   async (dispatch) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
 
     const body = JSON.stringify({ name, email, password });
 
     try {
-      const res = await axios.post('/api/users', body, config);
+      const res = await axios.post("/api/users", body, config);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -54,7 +54,7 @@ export const register =
       const errors = err.response.data.errors;
 
       if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
       }
       dispatch({
         type: REGISTER_FAIL,
@@ -65,14 +65,14 @@ export const register =
 export const login = (email, password) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
   const body = JSON.stringify({ email, password });
 
   try {
-    const res = await axios.post('/api/auth', body, config);
+    const res = await axios.post("/api/auth", body, config);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
@@ -83,7 +83,7 @@ export const login = (email, password) => async (dispatch) => {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
     dispatch({
       type: LOGIN_FAIL,
